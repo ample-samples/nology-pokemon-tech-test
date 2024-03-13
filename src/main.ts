@@ -36,12 +36,12 @@ if (!cardContainer) throw new Error("Card container not found")
 const searchInput = document.createElement("input")
 searchInput.style.display = "block"
 searchInput.placeholder = "PokéSearch"
-pokeHeading.appendChild(searchInput)
+pokeHeading.after(searchInput)
 
 const resultsNum = document.createElement("input")
 resultsNum.type = "number"
 resultsNum.placeholder = "How many results?"
-pokeHeading.appendChild(resultsNum)
+pokeHeading.after(resultsNum)
 
 resultsNum.addEventListener("input", (event: Event) => {
   const target = event.target as HTMLInputElement
@@ -52,7 +52,6 @@ resultsNum.addEventListener("input", (event: Event) => {
   }
   displayCards()
 })
-
 
 searchInput.addEventListener("input", (event: Event) => {
   const target = event.target as HTMLInputElement
