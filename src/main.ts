@@ -11,7 +11,7 @@ type State = {
 let state: State = {
   searchTerm: "",
   resultCount: 10,
-  typeFilter: "fire"
+  typeFilter: ""
 }
 
 const toProperCase = (string: string) => {
