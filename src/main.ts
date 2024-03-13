@@ -1,12 +1,15 @@
 import "./styles/style.scss";
+import { Pokemon } from "./data/types"
 import pokemonArray from "./data/pokemon"
 
 type State = {
-  searchTerm: string
+  searchTerm: string,
+  resultCount: number
 }
 
 let state: State = {
-  searchTerm: ""
+  searchTerm: "",
+  resultCount: 10
 }
 
 const toProperCase = (string: string) => {
@@ -30,12 +33,24 @@ if (!pokeHeading) throw new Error("Heading not found")
 const cardContainer = document.querySelector<HTMLDivElement>(".card-container")
 if (!cardContainer) throw new Error("Card container not found")
 
-const input = document.createElement("input")
-input.style.display = "block"
-input.placeholder = "PokéSearch"
-pokeHeading.appendChild(input)
+const searchInput = document.createElement("input")
+searchInput.style.display = "block"
+searchInput.placeholder = "PokéSearch"
+pokeHeading.appendChild(searchInput)
 
-input.addEventListener("input", (event: Event) => {
+const resultsNum = document.createElement("input")
+resultsNum.type = "number"
+resultsNum.placeholder = "How many results?"
+pokeHeading.appendChild(resultsNum)
+
+resultsNum.addEventListener("input", (event: Event) => {
+  const target = event.target as HTMLInputElement
+  state = { ...state, resultCount: Number(target.value) }
+  displayCards()
+})
+
+
+searchInput.addEventListener("input", (event: Event) => {
   const target = event.target as HTMLInputElement
   state = { ...state, searchTerm: target.value }
   displayCards()
@@ -43,8 +58,16 @@ input.addEventListener("input", (event: Event) => {
 
 const displayCards = () => {
   cardContainer.innerHTML = ""
-  pokemonArray.forEach(pokemon => {
-    if (!filterMatchesName(pokemon.name, state.searchTerm)) return
+  const pokeDisplay: Pokemon[] = []
+
+  for (let i = 0; i < pokemonArray.length; i++) {
+    const pokemon = pokemonArray[i]
+    if (!filterMatchesName(pokemon.name, state.searchTerm)) continue;
+    pokeDisplay.push(pokemon)
+  }
+
+  for (let i = 0; state.resultCount >= 0 ? i < state.resultCount && i <= pokeDisplay.length : i <= pokeDisplay.length; i++) {
+    const pokemon = pokeDisplay[i];
     const properName = toProperCase(pokemon.name);
 
     cardContainer.innerHTML += `
@@ -56,7 +79,7 @@ const displayCards = () => {
 		</div>
 	</section>
 	`
-  })
+  }
 }
 
 displayCards()
