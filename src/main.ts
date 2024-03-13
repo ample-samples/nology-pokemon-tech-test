@@ -36,9 +36,9 @@ input.placeholder = "PokéSearch"
 pokeHeading.appendChild(input)
 
 input.addEventListener("input", (event: Event) => {
-	const target = event.target as HTMLInputElement
-	state = { ...state, searchTerm: target.value }
-	displayCards()
+  const target = event.target as HTMLInputElement
+  state = { ...state, searchTerm: target.value }
+  displayCards()
 })
 
 const displayCards = () => {
