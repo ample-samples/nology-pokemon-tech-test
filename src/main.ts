@@ -45,7 +45,11 @@ pokeHeading.appendChild(resultsNum)
 
 resultsNum.addEventListener("input", (event: Event) => {
   const target = event.target as HTMLInputElement
-  state = { ...state, resultCount: Number(target.value) }
+  if (target.value === "") {
+    state = { ...state, resultCount: -1 }
+  } else {
+    state = { ...state, resultCount: Number(target.value) }
+  }
   displayCards()
 })
 
