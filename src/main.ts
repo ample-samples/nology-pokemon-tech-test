@@ -10,6 +10,15 @@ const toProperCase = (string: string) => {
 const cardContainer = document.querySelector<HTMLDivElement>(".card-container")
 if (!cardContainer) throw new Error("Card container not found")
 
+function filterMatchesName(searchItem: string, userSearch: string) {
+  if (userSearch === '') {
+    return true
+  } else if (searchItem.toLowerCase().includes(userSearch.toLowerCase())) {
+    return true
+  } 
+  return false
+}
+
 pokemonArray.forEach(pokemon => {
   const properName = toProperCase(pokemon.name);
 
