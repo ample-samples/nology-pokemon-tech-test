@@ -7,10 +7,7 @@ const toProperCase = (string: string) => {
   });
 };
 
-const cardContainer = document.querySelector<HTMLDivElement>(".card-container")
-if (!cardContainer) throw new Error("Card container not found")
-
-function filterMatchesName(searchItem: string, userSearch: string) {
+const filterMatchesName = (searchItem: string, userSearch: string) => {
   if (userSearch === '') {
     return true
   } else if (searchItem.toLowerCase().includes(userSearch.toLowerCase())) {
@@ -18,6 +15,9 @@ function filterMatchesName(searchItem: string, userSearch: string) {
   } 
   return false
 }
+
+const cardContainer = document.querySelector<HTMLDivElement>(".card-container")
+if (!cardContainer) throw new Error("Card container not found")
 
 pokemonArray.forEach(pokemon => {
   const properName = toProperCase(pokemon.name);
