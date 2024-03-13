@@ -4,12 +4,14 @@ import pokemonArray from "./data/pokemon"
 
 type State = {
   searchTerm: string,
-  resultCount: number
+  resultCount: number,
+  typeFilter: string
 }
 
 let state: State = {
   searchTerm: "",
-  resultCount: 10
+  resultCount: 10,
+  typeFilter: "fire"
 }
 
 const toProperCase = (string: string) => {
@@ -36,12 +38,17 @@ if (!cardContainer) throw new Error("Card container not found")
 const searchInput = document.createElement("input")
 searchInput.style.display = "block"
 searchInput.placeholder = "PokéSearch"
-pokeHeading.after(searchInput)
 
 const resultsNum = document.createElement("input")
 resultsNum.type = "number"
+resultsNum.style.display = "block"
 resultsNum.placeholder = "How many results?"
-pokeHeading.after(resultsNum)
+
+const typeFilterInput = document.createElement("input")
+typeFilterInput.placeholder = "Filter by type"
+typeFilterInput.style.display = "block"
+
+pokeHeading.after(searchInput, resultsNum, typeFilterInput)
 
 resultsNum.addEventListener("input", (event: Event) => {
   const target = event.target as HTMLInputElement
@@ -59,14 +66,28 @@ searchInput.addEventListener("input", (event: Event) => {
   displayCards()
 })
 
+typeFilterInput.addEventListener("input", (event: Event) => {
+  const target = event.target as HTMLInputElement
+  state = { ...state, typeFilter: target.value }
+  displayCards()
+})
+
 const displayCards = () => {
   cardContainer.innerHTML = ""
-  const pokeDisplay: Pokemon[] = []
+  let pokeDisplay: Pokemon[] = []
 
   for (let i = 0; i < pokemonArray.length; i++) {
     const pokemon = pokemonArray[i]
     if (!filterMatchesName(pokemon.name, state.searchTerm)) continue;
     pokeDisplay.push(pokemon)
+  }
+
+  if (state.typeFilter !== "") {
+    pokeDisplay = pokeDisplay.filter(pokemon => {
+			return pokemon.types.find(type => {
+				return filterMatchesName(type, state.typeFilter)
+				})
+    })
   }
 
   for (let i = 0; state.resultCount >= 0 ? i < state.resultCount && i <= pokeDisplay.length : i <= pokeDisplay.length; i++) {
