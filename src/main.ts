@@ -16,6 +16,13 @@ const filterMatchesName = (searchItem: string, userSearch: string) => {
   return false
 }
 
+const pokeHeading = document.querySelector("h1")
+if (!pokeHeading) throw	new Error("Heading not found")
+const input = document.createElement("input")
+input.style.display = "block"
+input.placeholder = "PokéSearch"
+pokeHeading.appendChild(input)
+
 const cardContainer = document.querySelector<HTMLDivElement>(".card-container")
 if (!cardContainer) throw new Error("Card container not found")
 
