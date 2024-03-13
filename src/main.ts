@@ -10,7 +10,7 @@ type State = {
 
 let state: State = {
   searchTerm: "",
-  resultCount: 10,
+  resultCount: -1,
   typeFilter: ""
 }
 
