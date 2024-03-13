@@ -9,8 +9,8 @@ let state: State = {
 }
 
 const toProperCase = (string: string) => {
-  return string.replace(/\w\S*/g, (txt) => {
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  return string.replace(/\w\S*/g, (word) => {
+    return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
   });
 };
 
