@@ -4,6 +4,7 @@ import pokemonArray from "./data/pokemon"
 type State = {
   searchTerm: string
 }
+
 let state: State = {
   searchTerm: ""
 }
@@ -25,18 +26,20 @@ const filterMatchesName = (searchItem: string, userSearch: string) => {
 
 const pokeHeading = document.querySelector("h1")
 if (!pokeHeading) throw new Error("Heading not found")
+
+const cardContainer = document.querySelector<HTMLDivElement>(".card-container")
+if (!cardContainer) throw new Error("Card container not found")
+
 const input = document.createElement("input")
 input.style.display = "block"
 input.placeholder = "PokéSearch"
 pokeHeading.appendChild(input)
+
 input.addEventListener("input", (event: Event) => {
 	const target = event.target as HTMLInputElement
 	state = { ...state, searchTerm: target.value }
 	displayCards()
 })
-
-const cardContainer = document.querySelector<HTMLDivElement>(".card-container")
-if (!cardContainer) throw new Error("Card container not found")
 
 const displayCards = () => {
   cardContainer.innerHTML = ""
